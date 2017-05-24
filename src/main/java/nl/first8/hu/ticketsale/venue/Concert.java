@@ -17,7 +17,9 @@ public class Concert implements Serializable {
     @GeneratedValue
     private Long id;
 
-    @OneToOne (mappedBy = "concert")
+    @OneToOne
+    @JoinColumn(name = "artist_id", referencedColumnName = "id")
+
     private Artist artist;
 
     @ManyToOne
