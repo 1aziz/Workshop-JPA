@@ -5,6 +5,7 @@ import nl.first8.hu.ticketsale.registration.AccountInfo;
 import nl.first8.hu.ticketsale.sales.Ticket;
 import nl.first8.hu.ticketsale.sales.TicketId;
 import nl.first8.hu.ticketsale.venue.Concert;
+import nl.first8.hu.ticketsale.venue.Genre;
 import nl.first8.hu.ticketsale.venue.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,8 +65,8 @@ public class TestRepository {
     public Concert createDefaultConcert(String artist, String locationName) {
         Location location = createLocation(locationName);
         Concert concert = new Concert();
-        concert.setArtist(artist);
-        concert.setGenre("Grindcore");
+        concert.getArtist().setName(artist);
+        concert.getArtist().setGenre(Genre.BASS_HOUSE);
         concert.setLocation(location);
         entityManager.persist(concert);
         return concert;
@@ -76,8 +77,8 @@ public class TestRepository {
     public Concert createConcert(String artist, String genre, String locationName) {
         Location location = createLocation(locationName);
         Concert concert = new Concert();
-        concert.setArtist(artist);
-        concert.setGenre(genre);
+        concert.getArtist().setName(artist);
+        concert.getArtist().setGenre(Genre.BASS_HOUSE);
         concert.setLocation(location);
         entityManager.persist(concert);
         return concert;

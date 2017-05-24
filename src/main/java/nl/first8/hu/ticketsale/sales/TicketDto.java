@@ -3,18 +3,14 @@ package nl.first8.hu.ticketsale.sales;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nl.first8.hu.ticketsale.registration.Account;
-
-import javax.persistence.*;
+import nl.first8.hu.ticketsale.venue.Artist;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class TicketDto {
 
-    private String artist;
-
-    private String genre;
+    private Artist artist;
 
     private String location;
 

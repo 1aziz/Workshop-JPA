@@ -9,9 +9,22 @@ CREATE TABLE concert (
   artist VARCHAR(255) NOT NULL,
   genre VARCHAR(255) NOT NULL,
   location_id BIGINT NOT NULL,
+  artist_id BIGINT NOT NULL
   PRIMARY KEY(id),
   FOREIGN KEY (location_id) REFERENCES location(id)
+  FOREIGN KEY (artist_id) REFERENCES artist(id)
+
 );
+
+CREATE TABLE artist (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  genre VARCHAR(255) NOT NULL,
+  concert_id BIGINT NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY (concert_id) REFERENCES concert(id)
+);
+
 
 DELETE FROM ticket;
 
@@ -24,3 +37,4 @@ DROP COLUMN genre,
 DROP COLUMN location,
 ADD PRIMARY KEY (concert_id, account_id),
 ADD FOREIGN KEY (concert_id) REFERENCES concert(id);
+
