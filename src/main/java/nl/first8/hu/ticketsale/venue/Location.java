@@ -3,7 +3,6 @@ package nl.first8.hu.ticketsale.venue;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import nl.first8.hu.ticketsale.registration.Account;
 
 import javax.persistence.*;
 import java.io.Serializable;

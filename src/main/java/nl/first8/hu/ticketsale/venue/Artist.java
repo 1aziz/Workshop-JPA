@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by aziz on 5/23/17.
@@ -21,7 +22,10 @@ public class Artist {
 
     private String name;
     @Enumerated(EnumType.STRING)
-    @Column(name = "GENRE")
+    @Column(name = "genre")
     private Genre genre;
+
+    @OneToMany(mappedBy = "artist")
+    private List<Concert> concerts;
 
 }
