@@ -1,11 +1,18 @@
 package nl.first8.hu.ticketsale.venue;
 
+import nl.first8.hu.ticketsale.registration.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ConcertRepository {
@@ -17,21 +24,45 @@ public class ConcertRepository {
         this.entityManager = entityManager;
     }
 
+
+
     public List<Concert> findConcertByArtist(String artist) {
-        String jpql = "SELECT DISTINCT nl.first8.hu.ticketsale.venue.Concert(artist.concert.id, artist.name, artist.concert.location) " +
-                "FROM Artist artist " +
-                "WHERE artist.name = :artist";
-        TypedQuery<Concert> query = entityManager.createQuery(jpql, Concert.class);
-        query.setParameter("artist", artist);
-        return query.getResultList();
+        try {
+            return entityManager.createQuery("SELECT c FROM Concert c WHERE c.artist.name = :artist", Concert.class)
+                    .setParameter("artist", artist)
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return Arrays.asList();
+        }
     }
 
-    public List<Concert> findConcertByGenre(Genre genre) {
-        String jpql = "SELECT DISTINCT NEW nl.first8.hu.ticketsale.venue.Concert(concert.id, concert.artist, concert.location) " +
-                "FROM Concert concert " +
-                "WHERE concert.artist.genre = :genre";
-        TypedQuery<Concert> query = entityManager.createQuery(jpql, Concert.class);
-        query.setParameter("genre", genre);
-        return query.getResultList();
+    public List<Concert> findConcertByGenre(String genre) {
+        try {
+            int genreOrdinal = Genre.valueOf(genre.toUpperCase()).ordinal();
+            return entityManager.createQuery("SELECT c FROM Concert c WHERE c.artist.genre = " + genreOrdinal, Concert.class)
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return Arrays.asList();
+        }
+    }
+
+    public List<Concert> findConcertByLocation(String name) {
+        try {
+            return entityManager.createQuery("SELECT c FROM Concert c WHERE c.location.name = :name", Concert.class)
+                    .setParameter("name", name)
+                    .getResultList();
+        } catch (NoResultException ex) {
+            return Arrays.asList();
+        }
+    }
+
+    public List<Concert> findConcertByMinDate(Date date) {
+        try {
+            return entityManager.createQuery("SELECT c FROM Concert c WHERE c.date > :date", Concert.class)
+                    .setParameter("date", date, TemporalType.DATE)
+                    .getResultList();
+        } catch (NoResultException ex){
+            return Arrays.asList();
+        }
     }
 }

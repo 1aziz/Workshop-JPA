@@ -5,9 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Data
@@ -21,8 +23,10 @@ public class Concert implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "artist_id", referencedColumnName = "id")
-
     private Artist artist;
+
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "location_id", referencedColumnName = "id")
@@ -30,6 +34,10 @@ public class Concert implements Serializable {
 
     private Location location;
 
-
+    @Autowired
+    public Concert(Artist artist, Location location) {
+        this.artist = artist;
+        this.location = location;
+    }
 
 }

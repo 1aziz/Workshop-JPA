@@ -21,7 +21,4 @@ public class Location implements Serializable {
     @Column(name = "location_name")
     private String name;
 
-    @OneToMany(mappedBy = "location")
-    private List<Concert> concerts;
-
 }

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,17 +16,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Artist {
+public class Artist  implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
 
     private String name;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "genre")
+
+    @Enumerated(EnumType.ORDINAL)
     private Genre genre;
-
-    @OneToMany(mappedBy = "artist")
-    private List<Concert> concerts;
-
 }
